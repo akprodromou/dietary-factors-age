@@ -1,0 +1,90 @@
+body {
+  display: flex; /* Enable flexbox layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; 
+  margin: 0; /* Remove default margin from body */
+}
+
+#my_dataviz {
+  position: relative;
+}
+
+svg text.main-title {
+  font-family: "DM Serif Display", sans-serif;
+  font-size: 2.55rem;
+  font-weight: 700;
+  line-height: 1.0;
+  text-transform: capitalize;
+}
+
+svg text.subtitle {
+  font-family: "DM Serif Display", sans-serif;
+  font-size: 1.59rem;
+  font-weight: 400;
+  line-height: 1.0;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: "DM Sans", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.1em;
+  fill: #000000;
+}
+
+.axis-label {
+  font-family: "DM Sans", serif;
+  font-weight: 400;
+  font-style: normal;
+  fill: #000000;
+  font-size: 0.815em;
+}
+
+.chart-title {
+  font-family: "DM Sans", serif;
+  font-weight: 400;
+  font-style: normal;
+  fill: #000000;
+  font-size: 0.815em;
+}
+
+.tooltip {
+  font-family: "DM Sans", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.815em;
+}
+
+.domain {
+  stroke: grey;
+  stroke-width: 0px;
+}
+
+.axis .tick line {
+  stroke: grey;
+  stroke-width: 1px;
+}
+
+.referenceText {
+  font-size: 0.65rem;
+  fill: #000000;
+  font-family: "DM Sans", sans-serif;
+}
+
+.legend {
+  font-size: 0.815em;
+  fill: #000000;
+  font-family: "DM Sans", sans-serif;
+}

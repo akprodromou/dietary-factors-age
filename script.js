@@ -47,10 +47,10 @@ d3.csv(
   const sortedColumns = columnMaxInfo.sort((a, b) => a.maxAge - b.maxAge);
   
   // Dimensions and layout
-  const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  const margin = { top: 20, right: 40, bottom: 30, left: 40 };
   const chartHeight = 85; // Height for each chart
   const titleMargin = 135; // Space for title and subtitle
-  const width = 800 - margin.left - margin.right;
+  const width = 600 - margin.left - margin.right;
   const height = 1130;
   
   // Create SVG container
@@ -66,13 +66,13 @@ d3.csv(
   const xScale = d3
     .scaleLinear()
     .domain([0, d3.max(chartData, (d) => d.age)])
-    .range([100, width - 400])
+    .range([margin.left/2, width-margin.right*4.7])
     .nice(); // extend the domain to get to 80 in the axis
 
-  // Add shared x-axis top
+  // Add shared x-axis bottom
   svg.append("g")
     .attr("class","axis")
-    .attr("transform", `translate(200, ${((chartHeight - 75)) + titleMargin})`)
+    .attr("transform", `translate(${width/2 - 55}, ${height})`)
     .call(d3.axisTop(xScale)
   );
 
@@ -80,30 +80,32 @@ d3.csv(
   const xAxisGroup = svg.append("g")
     .attr("class", "axis-group");
 
-  // Add shared x-axis bottom
+  // Add shared x-axis top
   xAxisGroup.append("g")
     .attr("class", "axis")
-    .attr("transform", `translate(200, ${((chartHeight - 59.25) * sortedColumns.length) + titleMargin})`)
+    .attr("transform", `translate(${(width/2 - 55)}, ${height-145})`)
     .call(d3.axisBottom(xScale));
 
   // Add x-axis bottom label
   xAxisGroup.append("text")
     .attr("class", "axis-label")
     .attr("text-anchor", "middle")
-    .attr("x", `${width / 2 + 50}`)
+    .attr("x", width *3/4 - 9)
     .attr("y", `${((chartHeight - 59.2) * (sortedColumns.length + 1.70)) + titleMargin}`)
     .text("Age");
 
+  const gridSpace = 39;
+
   // Add vertical grid lines
-  for (let x = 105; x <= 355; x += 30) {
+  for (let x = 105; x <= 105+gridSpace*8; x += gridSpace) {
       svg
       .append('line')
       .style("class", "gridLine")
       .style("stroke", "#9a9a9a")
       .style("stroke-width", 0.4)
-      .attr("x1", x + 195)
+      .attr("x1", x + 120)
       .attr("y1", titleMargin + 15)
-      .attr("x2", x + 195)
+      .attr("x2", x + 120)
       .attr("y2", titleMargin + 845);
       }  
 
@@ -154,7 +156,7 @@ d3.csv(
       .attr("stroke-opacity", 0.5)
       .attr("stroke-width", 1.25)
       .attr("d",d3.area()
-          .x((d) => xScale(d.age))
+          .x((d) => xScale(d.age)+3)
           .y0((d) => yScale(d[col])*.99)
           .y1((d) => yScale(d[col]))
       );
@@ -175,18 +177,18 @@ d3.csv(
         .style("stroke-width", 0.4)
         .attr("x1", - 200)
         .attr("y1", yScale(0) - 0)
-        .attr("x2", 345)
+        .attr("x2", 341)
         .attr("y2", yScale(0) - 0);
 
     // Calculate circle position based on max value and xScale
-    const circleX = xScale(maxDataPoint.age);
+    const circleX = xScale(maxDataPoint.age)+3;
     const circleY = yScale(maxDataPoint.col);
 
     // Add circle representing max value
     chartGroup
       .append("circle")
       .attr("class", "circle") 
-      .attr("cx", circleX + 3)
+      .attr("cx", circleX + 1)
       .attr("cy", 20)
       .attr("r", 6)
       .style("stroke-width", 0)
@@ -250,14 +252,14 @@ d3.csv(
   // Legend
   svg.append("text")
     .attr("class", "legend")
-    .attr("x", 21)
-    .attr("y", 1030)
+    .attr("x", width-42.5)
+    .attr("y", 130)
     .text("Max value");
 
   svg.append("circle")
     .attr("class", "circleLegend") 
-    .attr("cx", 6)
-    .attr("cy", 1025)
+    .attr("cx", width-57.5)
+    .attr("cy", 125)
     .attr("r", 6)
     .style("stroke-width", 0)
     .attr("fill", "#4a5e70") 
